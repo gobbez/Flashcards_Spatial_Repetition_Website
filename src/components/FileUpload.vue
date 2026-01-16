@@ -100,6 +100,11 @@ function parseAndLoad(content: string) {
     <div class="card glass">
       <h1>Upload Flashcards</h1>
       <p class="subtitle">Upload your .txt file to start training</p>
+      <div class="instructions">
+        <p>File format:</p>
+        <pre>F: "Front content"
+B: "Back content"</pre>
+      </div>
 
       <div 
         class="drop-zone" 
@@ -176,7 +181,30 @@ h1 {
 
 .subtitle {
   color: var(--color-text-muted);
+  margin-bottom: 1rem;
+}
+
+.instructions {
+  background: rgba(0, 0, 0, 0.2);
+  padding: 1rem;
+  border-radius: var(--radius);
   margin-bottom: 2rem;
+  text-align: left;
+}
+
+.instructions p {
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+.instructions pre {
+  font-family: monospace;
+  color: var(--color-primary);
+  background: rgba(0, 0, 0, 0.2);
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  font-size: 0.9rem;
 }
 
 .drop-zone {

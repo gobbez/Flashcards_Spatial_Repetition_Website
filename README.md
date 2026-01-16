@@ -1,27 +1,30 @@
-# .
+# Spatial Repetition Website
 
-This template should help get you started developing with Vue 3 in Vite.
+A modern Italian/English website for spaced repetition training. Users can upload a simple text file containing flashcards, and the application will help them study using a custom spaced repetition algorithm.
 
-## Recommended IDE Setup
+## Features
+- **File Upload**: Supports `.txt` files with a specific `F: / B:` format.
+- **Spaced Repetition Algorithm**: 
+  - "Understood" -> Re-appears at ~90% of the queue.
+  - "So and So" -> Re-appears at ~30% of the queue.
+  - "Study More" -> Re-appears at ~10% of the queue.
+- **Modern UI**: Glassmorphism design, dark mode, and smooth transitions.
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+## How to Use
 
-## Recommended Browser Setup
-
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
-
-## Type Support for `.vue` Imports in TS
-
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vite.dev/config/).
+1. **Prepare your flashcards**: Create a `.txt` file with the following format:
+   ```
+   F: "Front of the card"
+   B: "Back of the card"
+   F: "Pizza"
+   B: "Delicious Italian food"
+   ```
+2. **Upload**: Open the website and drag & drop your file.
+3. **Study**: 
+   - Click "Start Studying".
+   - Review the front of the card.
+   - Click "Show Back" to reveal the answer.
+   - Rate your understanding ("Understood", "So and so", "Study more") to schedule the card's next appearance.
 
 ## Project Setup
 
@@ -35,36 +38,15 @@ npm install
 npm run dev
 ```
 
-### Type-Check, Compile and Minify for Production
+### Build for Production
 
 ```sh
 npm run build
 ```
 
-### Run Unit Tests with [Vitest](https://vitest.dev/)
+## License
 
-```sh
-npm run test:unit
-```
+This project is open for use but requires attribution.
+**You must quote the original author upon use.**
 
-### Run End-to-End Tests with [Cypress](https://www.cypress.io/)
-
-```sh
-npm run test:e2e:dev
-```
-
-This runs the end-to-end tests against the Vite development server.
-It is much faster than the production build.
-
-But it's still recommended to test the production build with `test:e2e` before deploying (e.g. in CI environments):
-
-```sh
-npm run build
-npm run test:e2e
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
+© 2026 Spatial Repetition Website 
