@@ -26,6 +26,22 @@ onMounted(() => {
     router.push('/')
   }
 })
+
+function downloadCards() {
+  const content = store.queue.map(card => {
+    return `F: "${card.front}"\nB: "${card.back}"`
+  }).join('\n\n')
+  
+  const blob = new Blob([content], { type: 'text/plain' })
+  const url = URL.createObjectURL(blob)
+  const a = document.createElement('a')
+  a.href = url
+  a.download = `flashcards_session_${new Date().toISOString().slice(0, 10)}.txt`
+  document.body.appendChild(a)
+  a.click()
+  document.body.removeChild(a)
+  URL.revokeObjectURL(url)
+}
 </script>
 
 <template>
@@ -34,7 +50,10 @@ onMounted(() => {
       <div class="progress">
         Queue: {{ store.queue.length }} cards
       </div>
-      <button class="btn-icon" @click="router.push('/')" title="Exit">✕</button>
+      <div class="actions">
+        <button class="btn-icon" @click="downloadCards" title="Download Flashcards">⬇️</button>
+        <button class="btn-icon" @click="router.push('/')" title="Exit">✕</button>
+      </div>
     </header>
 
     <main v-if="currentCard">
@@ -94,6 +113,11 @@ header {
 .progress {
   font-weight: 600;
   color: var(--color-primary);
+}
+
+.actions {
+  display: flex;
+  gap: 1rem;
 }
 
 .btn-icon {
