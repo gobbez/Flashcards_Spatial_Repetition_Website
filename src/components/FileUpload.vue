@@ -16,14 +16,19 @@ function triggerInput() {
 function handleFileChange(event: Event) {
   const target = event.target as HTMLInputElement
   if (target.files && target.files.length > 0) {
-    file.value = target.files[0]
-    error.value = null
+    const selectedFile = target.files[0]
+    if (selectedFile) {
+      file.value = selectedFile
+      error.value = null
+    }
   }
 }
 
 function handleDrop(event: DragEvent) {
   if (event.dataTransfer?.files && event.dataTransfer.files.length > 0) {
     const droppedFile = event.dataTransfer.files[0]
+    if (!droppedFile) return
+    
     if (droppedFile.type === 'text/plain' || droppedFile.name.endsWith('.txt')) {
       file.value = droppedFile
       error.value = null
