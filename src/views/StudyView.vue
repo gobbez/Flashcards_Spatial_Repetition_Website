@@ -84,7 +84,7 @@ onMounted(() => {
     <div v-else class="empty-state">
       <h2>No flashcards found!</h2>
       <p>Add some cards in the Django Admin first.</p>
-      <a href="http://localhost:8000/admin" target="_blank" class="btn-primary">Go to Admin</a>
+      <a href="https://flashcardsspatialrepetition.pythonanywhere.com/admin/" target="_blank" class="btn-primary">Go to Admin</a>
     </div>
   </div>
 </template>
