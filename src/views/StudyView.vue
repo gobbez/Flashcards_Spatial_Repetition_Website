@@ -11,52 +11,49 @@ const showBack = ref(false)
 
 const currentCard = computed(() => store.currentCard)
 
+// Progress calculation
+const totalCards = computed(() => store.cards.length)
+const currentIndex = computed(() => {
+  if (!currentCard.value) return 0
+  return store.cards.findIndex(c => c.id === currentCard.value?.id) + 1
+})
+
 function toggleSide() {
   showBack.value = !showBack.value
 }
 
-function rate(rating: 'understood' | 'so_so' | 'study_more') {
-  store.processCard(rating)
+async function rate(rating: 'understood' | 'so_so' | 'study_more') {
+  await store.processCard(rating)
   showBack.value = false
 }
 
-// Redirect if no cards
 onMounted(() => {
-  if (store.cards.length === 0) {
-    router.push('/')
-  }
+  store.fetchCards()
 })
-
-function downloadCards() {
-  const content = store.queue.map(card => {
-    return `F: "${card.front}"\nB: "${card.back}"`
-  }).join('\n\n')
-  
-  const blob = new Blob([content], { type: 'text/plain' })
-  const url = URL.createObjectURL(blob)
-  const a = document.createElement('a')
-  a.href = url
-  a.download = `flashcards_session_${new Date().toISOString().slice(0, 10)}.txt`
-  document.body.appendChild(a)
-  a.click()
-  document.body.removeChild(a)
-  URL.revokeObjectURL(url)
-}
 </script>
 
 <template>
   <div class="study-container">
     <header>
-      <div class="progress">
-        Queue: {{ store.queue.length }} cards
+      <div class="progress" v-if="totalCards > 0">
+        Card {{ currentIndex }} of {{ totalCards }}
       </div>
       <div class="actions">
-        <button class="btn-icon" @click="downloadCards" title="Download Flashcards">⬇️</button>
         <button class="btn-icon" @click="router.push('/')" title="Exit">✕</button>
       </div>
     </header>
 
-    <main v-if="currentCard">
+    <div v-if="store.isLoading" class="loading-state">
+      <div class="spinner"></div>
+      <p>Loading flashcards...</p>
+    </div>
+
+    <div v-else-if="store.error" class="error-state">
+      <p>Error: {{ store.error }}</p>
+      <button @click="store.fetchCards" class="btn-primary">Retry</button>
+    </div>
+
+    <main v-else-if="currentCard">
       <FlashcardComponent 
         :card="currentCard" 
         :show-back="showBack" 
@@ -70,23 +67,24 @@ function downloadCards() {
         <div class="ratings">
           <button @click="rate('understood')" class="btn-rate success">
             Understood
-            <span class="hint">~90%</span>
+            <span class="hint">+10 pts</span>
           </button>
           <button @click="rate('so_so')" class="btn-rate warning">
             So and So
-            <span class="hint">~30%</span>
+            <span class="hint">+3 pts</span>
           </button>
           <button @click="rate('study_more')" class="btn-rate danger">
             Study More
-            <span class="hint">~10%</span>
+            <span class="hint">+1 pt</span>
           </button>
         </div>
       </div>
     </main>
     
     <div v-else class="empty-state">
-      <h2>Session Complete!</h2>
-      <button @click="router.push('/')" class="btn-primary">Upload New File</button>
+      <h2>No flashcards found!</h2>
+      <p>Add some cards in the Django Admin first.</p>
+      <a href="http://localhost:8000/admin" target="_blank" class="btn-primary">Go to Admin</a>
     </div>
   </div>
 </template>

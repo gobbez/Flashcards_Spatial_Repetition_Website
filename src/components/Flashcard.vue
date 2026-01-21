@@ -9,6 +9,7 @@ defineProps<{
 
 <template>
   <div class="flashcard-container">
+    <div class="subject-tag">{{ card.subject_name }}</div>
     <div class="flashcard" :class="{ flipped: showBack }">
       <div class="front">
         <div class="content">{{ card.front }}</div>
@@ -29,6 +30,17 @@ defineProps<{
   max-width: 600px;
   height: 400px; /* Fixed height for consistency */
   margin: 0 auto;
+}
+
+.subject-tag {
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--color-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.75rem;
+  font-weight: 600;
+  opacity: 0.8;
 }
 
 .flashcard {
