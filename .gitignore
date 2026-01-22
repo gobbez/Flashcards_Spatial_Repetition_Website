@@ -37,3 +37,7 @@ __screenshots__/
 
 my_cards.txt
 .agent/*
+
+*.sqlite3
+__pycache__/
+staticfiles/
