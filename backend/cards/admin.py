@@ -5,6 +5,7 @@ from .models import Flashcard, Subject, Quiz
 class SubjectAdmin(admin.ModelAdmin):
     list_display = ('name', 'points')
     search_fields = ('name',)
+    ordering = ('points',)
 
 @admin.register(Flashcard)
 class FlashcardAdmin(admin.ModelAdmin):

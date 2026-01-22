@@ -13,7 +13,8 @@ const uploadMessage = ref('')
 const isUploading = ref(false)
 
 async function handleFileUpload() {
-  if (!fileInput.value?.files?.length) {
+  const file = fileInput.value?.files?.[0]
+  if (!file) {
     uploadMessage.value = 'Please select a file first.'
     return
   }
@@ -23,12 +24,14 @@ async function handleFileUpload() {
   
   try {
     const res = await quizStore.uploadFile(
-      fileInput.value.files[0],
+      file,
       uploadType.value,
       uploadSubject.value
     )
     uploadMessage.value = res.message || 'Successfully uploaded!'
-    fileInput.value.value = '' // Clear input
+    if (fileInput.value) {
+      fileInput.value.value = '' // Clear input
+    }
   } catch (err: any) {
     uploadMessage.value = `Error: ${err.message}`
   } finally {
