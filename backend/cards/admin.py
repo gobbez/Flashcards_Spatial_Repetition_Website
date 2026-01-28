@@ -3,9 +3,9 @@ from .models import Flashcard, Subject, Quiz
 
 @admin.register(Subject)
 class SubjectAdmin(admin.ModelAdmin):
-    list_display = ('name', 'points')
+    list_display = ('name', 'points', 'moltiplicator')
     search_fields = ('name',)
-    ordering = ('points',)
+    ordering = ('-points',)
 
 @admin.register(Flashcard)
 class FlashcardAdmin(admin.ModelAdmin):

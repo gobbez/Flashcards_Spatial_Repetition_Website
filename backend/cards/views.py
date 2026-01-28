@@ -35,14 +35,15 @@ class FlashcardViewSet(viewsets.ModelViewSet):
         card.subject.save()
 
         # Reordering Logic
+        moltiplicator = card.subject.moltiplicator
         all_cards = list(Flashcard.objects.exclude(id=card.id).order_by('order'))
         count = len(all_cards)
         
         target_index = 0
         if rating == 'study_more':
-            target_index = min(10, count)
+            target_index = min(10 * moltiplicator, count)
         elif rating == 'so_so':
-            target_index = min(25, count)
+            target_index = min(25 * moltiplicator, count)
         elif rating == 'understood':
             target_index = int(count * 0.9)
             if target_index >= count:
@@ -52,7 +53,7 @@ class FlashcardViewSet(viewsets.ModelViewSet):
         if count == 0:
             new_order = 1.0
         elif target_index >= count:
-            new_order = all_cards[-1].order + 10.0
+            new_order = all_cards[-1].order + 10.0 * moltiplicator
         elif target_index == 0:
             new_order = all_cards[0].order / 2.0
         else:
