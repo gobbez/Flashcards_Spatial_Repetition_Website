@@ -41,3 +41,6 @@ my_cards.txt
 *.sqlite3
 __pycache__/
 staticfiles/
+
+backup.json
+db.sqlite3
